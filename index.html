@@ -164,6 +164,16 @@
     .edgeAccent{ stroke: rgba(0,212,255,.9); stroke-width:3; filter: drop-shadow(0 0 6px rgba(0,212,255,.55)); }
     .diagram-swatches .swatch{ min-height:58px; font-size:11px; }
   </style>
+  <style>
+    /* === Hex Reference Styles === */
+    .hex-grid{ display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+    .hex-card{ background: var(--card); border:1px solid var(--stroke); border-radius: var(--radius); overflow:hidden; box-shadow: var(--shadow); }
+    .hex-swatch{ height:72px; border-bottom:1px solid var(--stroke); display:flex; align-items:center; justify-content:center; font-weight:800; letter-spacing:.04em; text-shadow: 0 1px 0 rgba(0,0,0,.25); }
+    .hex-meta{ padding:10px 12px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .hex-name{ color: var(--text); font-weight:600; font-size:14px; }
+    .hex-code{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; color: var(--muted); font-size:13px; padding:.1em .4em; border:1px solid var(--stroke); border-radius:6px; background: rgba(255,255,255,.06); cursor:pointer; }
+    .copied{ outline:2px solid rgba(0,212,255,.6); box-shadow: 0 0 0 3px rgba(0,212,255,.15) inset; }
+  </style>
 </head>
 <body>
   <div class="wrap">
@@ -431,7 +441,7 @@
           <div class="c-label">Complementary clash</div>
         </div>
       </div>
-      <p class="desc" style="margin-top:10px"><b>WCAG quick tip:</b> target <span class="kbd">4.5:1</span> for normal text and <span class="kbd">3:1</span> for large text.</p>
+      
     </section>
 
     <!-- Grading Palettes -->
@@ -507,7 +517,7 @@
           <p class="desc">Four hues at 90° intervals. Balanced but busy — manage with value/saturation hierarchy.</p>
         </div>
       </div>
-      <div class="tip" style="margin-top:14px">Each diagram shows anchor points on a 12‑step wheel. Lines indicate relationships; swatches preview balanced picks at S=80%, L=55% (adjust in code if desired).</div>
+      
     </section>
 
     <!-- Quick Tips -->
@@ -557,6 +567,48 @@
       </div>
     </section>
   </div>
+    <!-- Hexadecimal Color Reference -->
+    <section>
+      <h2>Hexadecimal Color Reference</h2>
+      <div class="h2-rule"></div>
+      <div class="hex-grid">
+        <!-- Grays -->
+        <div class="hex-card"><div class="hex-swatch" style="background:#FFFFFF; color:#0b0e14">WHITE</div><div class="hex-meta"><span class="hex-name">White</span><button class="hex-code" data-hex="#FFFFFF">#FFFFFF</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#F2F2F2; color:#0b0e14">F2F2F2</div><div class="hex-meta"><span class="hex-name">Gray 5%</span><button class="hex-code" data-hex="#F2F2F2">#F2F2F2</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#D9D9D9; color:#0b0e14">D9D9D9</div><div class="hex-meta"><span class="hex-name">Gray 15%</span><button class="hex-code" data-hex="#D9D9D9">#D9D9D9</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#B3B3B3; color:#0b0e14">B3B3B3</div><div class="hex-meta"><span class="hex-name">Gray 30%</span><button class="hex-code" data-hex="#B3B3B3">#B3B3B3</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#808080">808080</div><div class="hex-meta"><span class="hex-name">Gray 50%</span><button class="hex-code" data-hex="#808080">#808080</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#4D4D4D">4D4D4D</div><div class="hex-meta"><span class="hex-name">Gray 70%</span><button class="hex-code" data-hex="#4D4D4D">#4D4D4D</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#262626">262626</div><div class="hex-meta"><span class="hex-name">Gray 85%</span><button class="hex-code" data-hex="#262626">#262626</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#000000">000000</div><div class="hex-meta"><span class="hex-name">Black</span><button class="hex-code" data-hex="#000000">#000000</button></div></div>
+
+        <!-- Core hues -->
+        <div class="hex-card"><div class="hex-swatch" style="background:#FF0000">RED</div><div class="hex-meta"><span class="hex-name">Red</span><button class="hex-code" data-hex="#FF0000">#FF0000</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#FFA500; color:#1a1000">ORANGE</div><div class="hex-meta"><span class="hex-name">Orange</span><button class="hex-code" data-hex="#FFA500">#FFA500</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#FFFF00; color:#1a1a00">YELLOW</div><div class="hex-meta"><span class="hex-name">Yellow</span><button class="hex-code" data-hex="#FFFF00">#FFFF00</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#00FF00; color:#002b00">LIME</div><div class="hex-meta"><span class="hex-name">Lime</span><button class="hex-code" data-hex="#00FF00">#00FF00</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#00FFFF; color:#002a2a">CYAN</div><div class="hex-meta"><span class="hex-name">Cyan</span><button class="hex-code" data-hex="#00FFFF">#00FFFF</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#0000FF">BLUE</div><div class="hex-meta"><span class="hex-name">Blue</span><button class="hex-code" data-hex="#0000FF">#0000FF</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#FF00FF">MAGENTA</div><div class="hex-meta"><span class="hex-name">Magenta</span><button class="hex-code" data-hex="#FF00FF">#FF00FF</button></div></div>
+
+        <!-- Designer set -->
+        <div class="hex-card"><div class="hex-swatch" style="background:#E91E63">E91E63</div><div class="hex-meta"><span class="hex-name">Pink 600</span><button class="hex-code" data-hex="#E91E63">#E91E63</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#C0392B">C0392B</div><div class="hex-meta"><span class="hex-name">Crimson</span><button class="hex-code" data-hex="#C0392B">#C0392B</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#D35400">D35400</div><div class="hex-meta"><span class="hex-name">Pumpkin</span><button class="hex-code" data-hex="#D35400">#D35400</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#F39C12; color:#1f1400">F39C12</div><div class="hex-meta"><span class="hex-name">Amber</span><button class="hex-code" data-hex="#F39C12">#F39C12</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#F1C40F; color:#1f1600">F1C40F</div><div class="hex-meta"><span class="hex-name">Sunflower</span><button class="hex-code" data-hex="#F1C40F">#F1C40F</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#27AE60">27AE60</div><div class="hex-meta"><span class="hex-name">Emerald</span><button class="hex-code" data-hex="#27AE60">#27AE60</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#2ECC71">2ECC71</div><div class="hex-meta"><span class="hex-name">Jade</span><button class="hex-code" data-hex="#2ECC71">#2ECC71</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#3498DB">3498DB</div><div class="hex-meta"><span class="hex-name">Sky</span><button class="hex-code" data-hex="#3498DB">#3498DB</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#2980B9">2980B9</div><div class="hex-meta"><span class="hex-name">Azure</span><button class="hex-code" data-hex="#2980B9">#2980B9</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#9B59B6">9B59B6</div><div class="hex-meta"><span class="hex-name">Amethyst</span><button class="hex-code" data-hex="#9B59B6">#9B59B6</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#8E44AD">8E44AD</div><div class="hex-meta"><span class="hex-name">Grape</span><button class="hex-code" data-hex="#8E44AD">#8E44AD</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#7F8C8D">7F8C8D</div><div class="hex-meta"><span class="hex-name">Slate</span><button class="hex-code" data-hex="#7F8C8D">#7F8C8D</button></div></div>
+        <div class="hex-card"><div class="hex-swatch" style="background:#95A5A6; color:#0b0e14">95A5A6</div><div class="hex-meta"><span class="hex-name">Silver</span><button class="hex-code" data-hex="#95A5A6">#95A5A6</button></div></div>
+      </div>
+      <p class="desc" style="margin-top:10px">Click any hex code to copy it to your clipboard. Use these as starting swatches; students can adjust saturation/value to build full palettes.</p>
+    </section>
+
   <script>
     // Render relationship diagrams dynamically
     const SCHEMES = {
@@ -622,6 +674,21 @@
     }
 
     document.querySelectorAll('.wheel-diagram').forEach(renderDiagram);
+
+    // Copy hex on click
+    document.addEventListener('click', async (e) => {
+      const btn = e.target.closest('.hex-code');
+      if(!btn) return;
+      const code = btn.dataset.hex;
+      try {
+        await navigator.clipboard.writeText(code);
+        btn.classList.add('copied');
+        const old = btn.textContent; btn.textContent = 'Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.textContent = code; }, 900);
+      } catch(err) {
+        console.warn('Clipboard copy failed', err);
+      }
+    });
   </script>
 </body>
 </html>
