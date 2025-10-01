@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Color Theory Reference — Modern</title>
+  <style>
+    /* ===== Theme Tokens ===== */
+    :root {
+      --bg: #0b0e14;               /* deep space */
+      --bg-accent: radial-gradient(1200px 600px at 10% 0%, #132036 0%, rgba(19,32,54,0) 60%),
+                   radial-gradient(900px 500px at 100% 100%, #1a0f2e 0%, rgba(26,15,46,0) 60%),
+                   linear-gradient(180deg, #0b0e14 0%, #0b0e14 100%);
+      --card: rgba(255, 255, 255, 0.06);
+      --card-2: rgba(255, 255, 255, 0.08);
+      --stroke: rgba(255, 255, 255, 0.12);
+      --text: #e6e9ef;
+      --muted: #a2adbe;
+      --accent: #00d4ff;           /* neon cyan */
+      --accent-2: #ff7a18;         /* sunrise orange */
+      --accent-3: #9a6bff;         /* violet */
+      --shadow: 0 10px 30px rgba(0,0,0,.45), inset 0 -1px 0 rgba(255,255,255,.03);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: var(--bg);
+      background-image: var(--bg-accent);
+      line-height: 1.6;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(20px, 4vw, 48px);
+    }
+
+    /* ===== Top Bar / Title ===== */
+    .title {
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+      margin-bottom: 26px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: 0.02em;
+      background: linear-gradient(90deg, var(--accent), var(--accent-3));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 0 14px rgba(0,212,255,.25);
+    }
+    .subtitle { color: var(--muted); font-size: clamp(14px, 2.4vw, 18px); }
+
+    /* ===== Section ===== */
+    section { margin: 24px 0 40px; }
+    h2 {
+      margin: 0 0 16px;
+      font-size: clamp(20px, 3vw, 26px);
+      letter-spacing: .01em;
+      color: #eaf6ff;
+    }
+    .h2-rule {
+      height: 2px; width: 100%;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      border-radius: 999px; opacity: .6; margin: 10px 0 20px;
+    }
+
+    /* ===== Cards / Grids ===== */
+    .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(0,212,255,.35); box-shadow: 0 14px 45px rgba(0,0,0,.5); }
+    .card h3 { margin: 0 0 14px; font-size: 18px; color: #f1f6ff; font-weight: 650; }
+    .desc { color: var(--muted); font-size: 14px; }
+
+    /* ===== Color Wheel ===== */
+    .wheel-wrap { display:grid; place-items:center; gap:12px; }
+    .wheel {
+      width: 280px; height: 280px; border-radius: 50%; position: relative;
+      background: conic-gradient(from 0deg,
+        #ff0047 0deg, #ff7a18 30deg, #ffd000 60deg, #8fff00 90deg, #00ff6e 120deg, #00ffd0 150deg,
+        #00d4ff 180deg, #0087ff 210deg, #3b00ff 240deg, #8a00ff 270deg, #ff00e6 300deg, #ff0066 330deg, #ff0047 360deg);
+      box-shadow: inset 0 0 0 10px rgba(11,14,20,.7), 0 20px 45px rgba(0,0,0,.45);
+      outline: 1px solid var(--stroke);
+    }
+    .wheel::after{ content:""; position:absolute; inset:26%; border-radius:50%; background: radial-gradient(circle at 30% 30%, rgba(0,0,0,.22), rgba(0,0,0,.5)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); }
+
+    /* ===== Color Schemes ===== */
+    .swatch-row { display:flex; gap:10px; align-items:stretch; }
+    .swatch {
+      flex:1; min-height:82px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+      color:#fff; font-weight:700; font-size:12px; letter-spacing:.04em; text-transform:uppercase;
+      box-shadow: inset 0 -40px 60px rgba(0,0,0,.25), 0 8px 18px rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.12);
+      position:relative; overflow:hidden;
+    }
+    .swatch small { position:absolute; bottom:6px; right:10px; opacity:.9; font-weight:600; letter-spacing:0; text-transform:none; }
+
+    /* ===== Temperature Bar ===== */
+    .temp-bar {
+      height: 120px; border-radius: 14px; border:1px solid var(--stroke);
+      background: linear-gradient(90deg, #0d1b5e 0%, #0066cc 15%, #00ccff 35%, #ffffff 50%, #ffd166 65%, #ff8c42 82%, #b30000 100%);
+      position:relative; box-shadow: var(--shadow); overflow:hidden;
+    }
+    .temp-bar .label { position:absolute; top:10px; padding:6px 10px; border-radius:999px; font-weight:700; font-size:12px; color:#001a2b; background: rgba(255,255,255,.9); border:1px solid rgba(255,255,255,.6); }
+    .label.cool { left:10px; color:#063a7a; }
+    .label.warm { right:10px; color:#8a1900; }
+
+    /* ===== Value / Saturation ===== */
+    .value-grid { display:grid; grid-template-columns: repeat(9, 1fr); gap:10px; }
+    .v-box { aspect-ratio: 1; border-radius: 10px; border:1px solid var(--stroke); box-shadow: var(--shadow); }
+    .sat-grid { display:grid; grid-template-columns: repeat(7, 1fr); gap:10px; }
+    .s-box { height: 80px; border-radius: 10px; border:1px solid var(--stroke); box-shadow: var(--shadow); }
+
+    /* ===== Psychology Cards ===== */
+    .psy-grid { display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .psy {
+      padding: 18px 16px; border-radius: var(--radius); color:#fff; border:1px solid rgba(255,255,255,.14);
+      box-shadow: var(--shadow); text-shadow: 0 1px 0 rgba(0,0,0,.22);
+    }
+    .psy h4 { margin: 0 0 6px; font-size: 17px; }
+    .psy ul { margin: 6px 0 0; padding: 0 0 0 16px; }
+
+    /* ===== Contrast ===== */
+    .contrast-grid { display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .c-card { height: 140px; border-radius: 14px; display:flex; align-items:center; justify-content:center; font-weight:800; border:1px solid var(--stroke); box-shadow: var(--shadow); }
+    .c-label { text-align:center; margin-top:8px; color: var(--muted); font-size: 13px; }
+
+    /* ===== Gradients ===== */
+    .grad-grid { display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .grad { height: 110px; border-radius: 14px; border: 1px solid var(--stroke); box-shadow: var(--shadow); }
+
+    /* ===== Helper ===== */
+    .muted { color: var(--muted); }
+    .tip {
+      background: var(--card-2);
+      border: 1px dashed rgba(0,212,255,.35);
+      border-radius: 14px; padding: 16px; color: var(--muted); font-size: 14px;
+    }
+    .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; background: rgba(255,255,255,.08); padding:.1em .5em; border-radius:6px; border:1px solid var(--stroke); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="title">
+      <h1>Color Theory Reference Charts</h1>
+      <div class="subtitle">A modern, high‑contrast guide for digital artists & designers</div>
+    </div>
+
+    <!-- Fundamental Concepts -->
+    <section>
+      <h2>Fundamental Color Concepts</h2>
+      <div class="h2-rule"></div>
+      <div class="grid">
+        <div class="card">
+          <h3>The Color Wheel</h3>
+          <div class="wheel-wrap">
+            <div class="wheel" aria-label="Color wheel"></div>
+            <p class="desc" style="text-align:center; max-width:52ch">
+              <b>Primary:</b> Red, Yellow, Blue &nbsp;•&nbsp;
+              <b>Secondary:</b> Orange, Green, Purple &nbsp;•&nbsp;
+              <b>Tertiary:</b> mixes of primary + secondary
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Color Temperature</h3>
+          <div class="temp-bar" role="img" aria-label="Color temperature continuum">
+            <span class="label cool">COOL</span>
+            <span class="label warm">WARM</span>
+          </div>
+          <p class="desc">
+            <b>Cool</b> (blues/greens/purples) often recede and feel calm or professional. <b>Warm</b> (reds/oranges/yellows) advance and add energy or comfort.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Harmonies -->
+    <section>
+      <h2>Color Harmony Schemes</h2>
+      <div class="h2-rule"></div>
+
+      <div class="card">
+        <h3>Complementary</h3>
+        <div class="swatch-row" title="Complementary pair">
+          <div class="swatch" style="background:#e63946">Red <small>#e63946</small></div>
+          <div class="swatch" style="background:#2a9d8f">Cyan‑Green <small>#2a9d8f</small></div>
+        </div>
+        <div class="swatch-row">
+          <div class="swatch" style="background:#0077b6">Blue <small>#0077b6</small></div>
+          <div class="swatch" style="background:#f77f00">Orange <small>#f77f00</small></div>
+        </div>
+        <div class="swatch-row">
+          <div class="swatch" style="background:#7209b7">Purple <small>#7209b7</small></div>
+          <div class="swatch" style="background:#d4e09b; color:#0b0e14">Yellow‑Green <small>#d4e09b</small></div>
+        </div>
+        <p class="desc">Opposites on the wheel → maximum contrast and visual punch.</p>
+      </div>
+
+      <div class="card">
+        <h3>Analogous</h3>
+        <div class="swatch-row">
+          <div class="swatch" style="background:#06ffa5; color:#06231a">Green <small>#06ffa5</small></div>
+          <div class="swatch" style="background:#06d6a0; color:#06231a">Cyan <small>#06d6a0</small></div>
+          <div class="swatch" style="background:#0cb0a9">Teal <small>#0cb0a9</small></div>
+        </div>
+        <div class="swatch-row">
+          <div class="swatch" style="background:#ff006e">Magenta <small>#ff006e</small></div>
+          <div class="swatch" style="background:#fb5607">Red‑Orange <small>#fb5607</small></div>
+          <div class="swatch" style="background:#ffbe0b; color:#1f1300">Yellow <small>#ffbe0b</small></div>
+        </div>
+        <p class="desc">Neighbors on the wheel → harmony and cohesion.</p>
+      </div>
+
+      <div class="card">
+        <h3>Triadic</h3>
+        <div class="swatch-row">
+          <div class="swatch" style="background:#d62828">Red <small>#d62828</small></div>
+          <div class="swatch" style="background:#003049">Blue <small>#003049</small></div>
+          <div class="swatch" style="background:#f9c74f; color:#2a1e00">Yellow <small>#f9c74f</small></div>
+        </div>
+        <div class="swatch-row">
+          <div class="swatch" style="background:#ff6d00">Orange <small>#ff6d00</small></div>
+          <div class="swatch" style="background:#06ffa5; color:#06231a">Green <small>#06ffa5</small></div>
+          <div class="swatch" style="background:#7209b7">Purple <small>#7209b7</small></div>
+        </div>
+        <p class="desc">Three evenly spaced hues → vibrant, balanced palettes.</p>
+      </div>
+
+      <div class="card">
+        <h3>Split Complementary</h3>
+        <div class="swatch-row">
+          <div class="swatch" style="background:#0077b6">Blue <small>#0077b6</small></div>
+          <div class="swatch" style="background:#f77f00">Orange <small>#f77f00</small></div>
+          <div class="swatch" style="background:#d62828">Red <small>#d62828</small></div>
+        </div>
+        <div class="swatch-row">
+          <div class="swatch" style="background:#2a9d8f">Cyan <small>#2a9d8f</small></div>
+          <div class="swatch" style="background:#e63946">Red <small>#e63946</small></div>
+          <div class="swatch" style="background:#7209b7">Purple <small>#7209b7</small></div>
+        </div>
+        <p class="desc">A base hue + the neighbors of its complement → contrast with extra harmony.</p>
+      </div>
+
+      <div class="card">
+        <h3>Monochromatic</h3>
+        <div class="swatch-row">
+          <div class="swatch" style="background:#1a1a2e">Dark Blue <small>#1a1a2e</small></div>
+          <div class="swatch" style="background:#16213e">Blue <small>#16213e</small></div>
+          <div class="swatch" style="background:#0f3460">Mid <small>#0f3460</small></div>
+          <div class="swatch" style="background:#4a90e2">Light <small>#4a90e2</small></div>
+          <div class="swatch" style="background:#a8dadc; color:#0b0e14">Pale <small>#a8dadc</small></div>
+        </div>
+        <p class="desc">Tints/tones/shades of one hue → sophisticated cohesion.</p>
+      </div>
+    </section>
+
+    <!-- Value, Saturation & Tone -->
+    <section>
+      <h2>Value, Saturation & Tone</h2>
+      <div class="h2-rule"></div>
+
+      <div class="card">
+        <h3>Value Scale (Light → Dark)</h3>
+        <div class="value-grid" aria-label="value scale grid">
+          <div class="v-box" style="background:#ffffff"></div>
+          <div class="v-box" style="background:#e0e0e0"></div>
+          <div class="v-box" style="background:#c0c0c0"></div>
+          <div class="v-box" style="background:#a0a0a0"></div>
+          <div class="v-box" style="background:#808080"></div>
+          <div class="v-box" style="background:#606060"></div>
+          <div class="v-box" style="background:#404040"></div>
+          <div class="v-box" style="background:#202020"></div>
+          <div class="v-box" style="background:#000000"></div>
+        </div>
+        <p class="desc">Value controls lightness/darkness. High value contrast creates drama and focus.</p>
+      </div>
+
+      <div class="card">
+        <h3>Tints, Tones & Shades</h3>
+        <h4 class="muted" style="margin:8px 0">Tints (Hue + White)</h4>
+        <div class="sat-grid">
+          <div class="s-box" style="background:#ff0000"></div>
+          <div class="s-box" style="background:#ff3333"></div>
+          <div class="s-box" style="background:#ff6666"></div>
+          <div class="s-box" style="background:#ff9999"></div>
+          <div class="s-box" style="background:#ffcccc"></div>
+          <div class="s-box" style="background:#ffe6e6"></div>
+          <div class="s-box" style="background:#ffffff"></div>
+        </div>
+        <h4 class="muted" style="margin:8px 0">Tones (Hue + Gray)</h4>
+        <div class="sat-grid">
+          <div class="s-box" style="background:#ff0000"></div>
+          <div class="s-box" style="background:#d93636"></div>
+          <div class="s-box" style="background:#b35555"></div>
+          <div class="s-box" style="background:#8d6969"></div>
+          <div class="s-box" style="background:#7a7a7a"></div>
+          <div class="s-box" style="background:#999999"></div>
+          <div class="s-box" style="background:#b3b3b3"></div>
+        </div>
+        <h4 class="muted" style="margin:8px 0">Shades (Hue + Black)</h4>
+        <div class="sat-grid">
+          <div class="s-box" style="background:#ff0000"></div>
+          <div class="s-box" style="background:#cc0000"></div>
+          <div class="s-box" style="background:#990000"></div>
+          <div class="s-box" style="background:#660000"></div>
+          <div class="s-box" style="background:#330000"></div>
+          <div class="s-box" style="background:#1a0000"></div>
+          <div class="s-box" style="background:#000000"></div>
+        </div>
+        <p class="desc"><b>Tints</b> feel airy/delicate • <b>Tones</b> are muted/sophisticated • <b>Shades</b> add drama and depth.</p>
+      </div>
+    </section>
+
+    <!-- Psychology -->
+    <section>
+      <h2>Color Psychology & Mood</h2>
+      <div class="h2-rule"></div>
+      <div class="psy-grid">
+        <div class="psy" style="background:linear-gradient(135deg,#ff6b6b,#ee5a6f)">
+          <h4>Red</h4>
+          <ul>
+            <li>Passion & energy</li>
+            <li>Danger & urgency</li>
+            <li>Love & romance</li>
+            <li>Action & appetite</li>
+          </ul>
+        </div>
+        <div class="psy" style="background:linear-gradient(135deg,#4ecdc4,#44a7b1)">
+          <h4>Blue</h4>
+          <ul>
+            <li>Trust & stability</li>
+            <li>Calm & focus</li>
+            <li>Melancholy</li>
+            <li>Professionalism</li>
+          </ul>
+        </div>
+        <div class="psy" style="background:linear-gradient(135deg,#ffd93d,#f4c430); color:#2a1e00">
+          <h4>Yellow</h4>
+          <ul>
+            <li>Happiness & optimism</li>
+            <li>Attention & caution</li>
+            <li>Warmth & play</li>
+            <li>Visibility</li>
+          </ul>
+        </div>
+        <div class="psy" style="background:linear-gradient(135deg,#95e1d3,#6fcf97)">
+          <h4>Green</h4>
+          <ul>
+            <li>Nature & growth</li>
+            <li>Health & balance</li>
+            <li>Freshness</li>
+            <li>Renewal</li>
+          </ul>
+        </div>
+        <div class="psy" style="background:linear-gradient(135deg,#ff9a56,#ff7f50)">
+          <h4>Orange</h4>
+          <ul>
+            <li>Creativity & fun</li>
+            <li>Confidence</li>
+            <li>Friendliness</li>
+            <li>Enthusiasm</li>
+          </ul>
+        </div>
+        <div class="psy" style="background:linear-gradient(135deg,#b19cd9,#9370db)">
+          <h4>Purple</h4>
+          <ul>
+            <li>Luxury & royalty</li>
+            <li>Mystery & magic</li>
+            <li>Creativity & wisdom</li>
+            <li>Spirituality</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contrast -->
+    <section>
+      <h2>Contrast & Readability</h2>
+      <div class="h2-rule"></div>
+      <div class="contrast-grid">
+        <div>
+          <div class="c-card" style="background:#000; color:#fff">High Contrast</div>
+          <div class="c-label">Black on White (≈21:1)</div>
+        </div>
+        <div>
+          <div class="c-card" style="background:#fff; color:#222">Good Contrast</div>
+          <div class="c-label">Dark Gray on White (≈12.6:1)</div>
+        </div>
+        <div>
+          <div class="c-card" style="background:#0077b6; color:#fff">Accessible</div>
+          <div class="c-label">Blue on White (≥4.5:1)</div>
+        </div>
+        <div>
+          <div class="c-card" style="background:#ffcc00; color:#222">Readable</div>
+          <div class="c-label">Dark on Yellow (≈9.5:1)</div>
+        </div>
+        <div>
+          <div class="c-card" style="background:#e0e0e0; color:#bdbdbd">Poor Contrast</div>
+          <div class="c-label">Gray on Gray (≈1.5:1)</div>
+        </div>
+        <div>
+          <div class="c-card" style="background:#ff0033; color:#00ff66">Vibrating</div>
+          <div class="c-label">Complementary clash</div>
+        </div>
+      </div>
+      <p class="desc" style="margin-top:10px"><b>WCAG quick tip:</b> target <span class="kbd">4.5:1</span> for normal text and <span class="kbd">3:1</span> for large text.</p>
+    </section>
+
+    <!-- Grading Palettes -->
+    <section>
+      <h2>Common Color‑Grading Palettes</h2>
+      <div class="h2-rule"></div>
+      <div class="grad-grid">
+        <div>
+          <div class="grad" style="background:linear-gradient(135deg,#0a4d68,#088395,#05b6d1,#f77f00)"></div>
+          <div class="c-label">Cinematic Teal & Orange</div>
+        </div>
+        <div>
+          <div class="grad" style="background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460,#e94560)"></div>
+          <div class="c-label">Dark Moody Blues</div>
+        </div>
+        <div>
+          <div class="grad" style="background:linear-gradient(135deg,#fff3e0,#ffe0b2,#ffcc80,#ff9800)"></div>
+          <div class="c-label">Warm Vintage</div>
+        </div>
+        <div>
+          <div class="grad" style="background:linear-gradient(135deg,#ff6b9d,#c06c84,#6c5b7b,#355c7d)"></div>
+          <div class="c-label">Purple Sunset</div>
+        </div>
+        <div>
+          <div class="grad" style="background:linear-gradient(135deg,#00b4d8,#0096c7,#0077b6,#023e8a)"></div>
+          <div class="c-label">Cool Ocean</div>
+        </div>
+        <div>
+          <div class="grad" style="background:linear-gradient(135deg,#06ffa5,#0fd9c4,#09c6cf,#06aed5)"></div>
+          <div class="c-label">Neon Cyberpunk</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Tips -->
+    <section>
+      <h2>Quick Reference Tips</h2>
+      <div class="h2-rule"></div>
+      <div class="grid">
+        <div class="card">
+          <h3>For Dramatic Impact</h3>
+          <ul class="desc">
+            <li>Lean on complementary pairs</li>
+            <li>Push value contrast</li>
+            <li>Use bold, saturated accents</li>
+            <li>Balance with neutral space</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>For Harmony & Peace</h3>
+          <ul class="desc">
+            <li>Analogous schemes</li>
+            <li>Lower contrast / softer tones</li>
+            <li>Consistent temperature</li>
+            <li>Generous white/negative space</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>For Energy & Excitement</h3>
+          <ul class="desc">
+            <li>Warm‑dominant palette</li>
+            <li>High saturation bursts</li>
+            <li>Triadic compositions</li>
+            <li>Animated highlights (in UI)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>For a Professional Look</h3>
+          <ul class="desc">
+            <li>Cool‑dominant or muted palettes</li>
+            <li>Monochromatic with accents</li>
+            <li>Subtle contrast & clear hierarchy</li>
+            <li>Test accessibility early</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tip" style="margin-top:18px">
+        Pro tip: tweak global colors in <span class="kbd">:root</span> (e.g., <span class="kbd">--accent</span>, <span class="kbd">--accent-2</span>, <span class="kbd">--accent-3</span>) to instantly reskin this page for a lesson theme or brand.
+      </div>
+    </section>
+  </div>
+</body>
+</html>
